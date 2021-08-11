@@ -1,3 +1,3 @@
-TESTRAIL_URL='https://defencehealthltd.testrail.io/index.php?/dashboard'
+TESTRAIL_URL='https://defencehealthltd.testrail.io/'
 TESTRAIL_USER='saranraj.gajendiran@defencehealth.com.au'
-TESTRAIL_PASSWORD=''
+TESTRAIL_PASSWORD='Defence2021!'
