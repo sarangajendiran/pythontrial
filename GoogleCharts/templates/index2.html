@@ -1,0 +1,35 @@
+<html>
+  <head>
+    <title>Project Delta E2E Dashboard</title>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script>
+      tdata = JSON.parse({{tempdata|tojson|safe}});
+      tempdata = tdata.data;
+      temptitle = tdata.title;
+      chartType = "PieChart"
+      containerID = "chart1"
+      options = {'title': temptitle, is3D: true,};
+    </script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['table']});
+      google.charts.setOnLoadCallback(drawTable);
+      function drawTable() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('number', 'ID');
+        data.addColumn('string', 'Name');
+        data.addColumn('string', 'URL');
+        data.addRows(tempdata);
+        var table = new google.visualization.Table(document.getElementById('Table_div'));
+        table.draw(data, {showRowNumber: true, width: '60%', height: '66%'});
+      }
+    </script>
+  </head>
+  <body>
+    <marquee><h1>Project Delta E2E Dashboard</h1></marquee>
+    <h3>Test Suites</h3>
+    <iframe width = "555" height = "200">
+      <div id="Table_div" ></div>
+    </iframe>
+    
+  </body>
+</html>

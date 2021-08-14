@@ -32,18 +32,18 @@ def get_suites(project_name):
     print("Project ID:", project_id)
     suite_id = None
     suites = client.send_get('get_suites/%s' %project_id)
-    print(type(suites))
-    df1 = pd.DataFrame(suites, columns = ['name','id'])
+    # print(type(suites))
+    df1 = pd.DataFrame(suites, columns = ['id','name','url'])
     # df1 = df1.columns(['name','id'])
     # print(df1)
     a = df1.columns.values.tolist()
     b = df1.values.tolist()
-    b.insert(0,a)
+    # b.insert(0,a)
     # print(b)
     title = "Test Suites"
-    tempdata = json.dumps({'title': title, 'data':b})
+    tempdata = json.dumps({'title': a, 'data':b})
     return tempdata
     # df1.to_csv(r'C:\Users\4448\sample.csv', index= False)
 
-suite_data = get_suites('Project DELTA E2E')
-print(suite_data)
+# suite_data = get_suites('Project DELTA E2E')
+# print(suite_data)
