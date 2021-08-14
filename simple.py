@@ -45,15 +45,18 @@ def get_cases(project_name, suite_name):
     suite_id, project_id = get_suites(project_name, suite_name)
     print("Suites for the project ID:", suite_id)
     cases = client.send_get('get_cases/%s&suite_id=%s' %(project_id,suite_id))
-    file1 = open(r'C:\Users\4448\Read.json', 'w')
-    case = None
-    for case in cases:
-        file1.write(str(case))
+    file1 = open(r'C:\Users\4448\sample.txt', 'w')
+    case = 1
+    # file1.write(str(cases[0]['title']))
+    # file1.write('\n')
+    # file1.close()
+    num_lines = len(cases)
+    print(num_lines)
+    for case in range(num_lines):
+        file1.write(str(cases[case]['title']))
+        case+=case
         file1.write('\n')
     file1.close()
     return cases
 
 # cases = get_cases('Project DELTA E2E', '14.Security & Access Management')
-df = pd.read_csv(r'C:\Users\4448\Read.txt', header = None)
-print(df.shape)
-df.to_excel(r'C:\Users\4448\Read_data.xlsx')
