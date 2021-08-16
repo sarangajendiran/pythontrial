@@ -1,6 +1,64 @@
 <html>
+  <title>Project Delta E2E Dashboard</title>
   <head>
-    <title>Project Delta E2E Dashboard</title>
+    <style>
+      .button {
+        background-color: #4CAF50;
+        border: none;
+        color: white;
+        padding: 13px 30px;
+        text-align: centre;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        transition-duration: 0.4s;
+        cursor: pointer;
+        font-family: Convergence;
+      }
+      .button1 {
+        background-color: white; 
+        border: 2px solid #4CAF50;
+        color: black;
+      }
+      .button1:hover {
+        background-color: #4CAF50; 
+        color: white;
+      }
+      .cssHeaderRow {
+        background-color: #b91308;
+      }
+        .cssTableRow {
+          background-color: #c0d7ee;
+        }
+        .cssTableRow {
+          background-color: #F0F1F2;
+        }
+        .cssHoverTableRow {
+          background: rgb(108, 203, 247);
+        }
+        .cssSelectedTableRow {
+          font-size: 10px;
+          font-weight: bold;
+        }
+        .cssHeaderCell {
+          color: #FFFFFF;
+          font-size: 12px;
+          padding: 4px !important;
+          border: solid 1px #FFFFFF;
+          font-family: Convergence;
+        }
+        .cssTableCell {
+          text-align: center;
+          font-size: 12px;
+          padding: 2px !important;
+          border: solid 1px #FFFFFF;
+          font-family: Convergence;
+        }
+        .cssRowNumberCell {
+          text-align: centre;        
+        }
+    </style>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script>
       tdata = JSON.parse({{tempdata|tojson|safe}});
@@ -17,19 +75,24 @@
         var data = new google.visualization.DataTable();
         data.addColumn('number', 'ID');
         data.addColumn('string', 'Name');
-        data.addColumn('string', 'URL');
+        data.addColumn('number', 'Test Cases');
         data.addRows(tempdata);
+        var cssClassNames = {
+          'headerRow': 'cssHeaderRow',
+          'tableRow': 'cssTableRow',
+          'oddTableRow': 'cssOddTableRow',
+          'hoverTableRow': 'cssHoverTableRow',
+          'headerCell': 'cssHeaderCell',
+          'tableCell': 'cssTableCell'
+        }
         var table = new google.visualization.Table(document.getElementById('Table_div'));
-        table.draw(data, {showRowNumber: true, width: '60%', height: '66%'});
+        table.draw(data, {cssClassNames: cssClassNames, width: '50%', height: '70%'});
       }
     </script>
   </head>
   <body>
     <marquee><h1>Project Delta E2E Dashboard</h1></marquee>
-    <h3>Test Suites</h3>
-    <iframe width = "555" height = "200">
-      <div id="Table_div" ></div>
-    </iframe>
-    
+    <h2>Test Suites</h2>
+    <div id="Table_div" style="width:700px; height: 400px; display: inline-block;"></div>    
   </body>
 </html>

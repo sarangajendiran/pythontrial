@@ -25,6 +25,13 @@ def get_project_id(project_name):
             break
     return project_id
 
+def get_cases(suite_id):
+    "Get the project ID using project name"
+    client = get_testrail_client()
+    cases = client.send_get('get_cases/25&suite_id=%s' %suite_id)
+    total_cases = len(cases)
+    return total_cases
+
 def get_suites(project_name):
     "Get the project ID using project name"
     client = get_testrail_client()
@@ -32,10 +39,8 @@ def get_suites(project_name):
     print("Project ID:", project_id)
     suite_id = None
     suites = client.send_get('get_suites/%s' %project_id)
-    # print(type(suites))
-    df1 = pd.DataFrame(suites, columns = ['id','name','url'])
-    # df1 = df1.columns(['name','id'])
-    # print(df1)
+    df1 = pd.DataFrame(suites, columns = ['id','name'])
+    df1['total_cases'] = df1.apply(lambda x: get_cases(x['id']), axis=1)
     a = df1.columns.values.tolist()
     b = df1.values.tolist()
     # b.insert(0,a)
@@ -44,6 +49,16 @@ def get_suites(project_name):
     tempdata = json.dumps({'title': a, 'data':b})
     return tempdata
     # df1.to_csv(r'C:\Users\4448\sample.csv', index= False)
+
+def get_runs():
+    "Get the project ID using project name"
+    client = get_testrail_client()
+    reports = client.send_get('get_runs/25')
+    df1 = pd.DataFrame(reports)
+    # print(df1)
+    file = df1.to_csv(r'C:\Users\4448\testruns.csv', index= False)
+    print("File generated")
+    return df1
 
 # suite_data = get_suites('Project DELTA E2E')
 # print(suite_data)
