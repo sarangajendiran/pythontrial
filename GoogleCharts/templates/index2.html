@@ -1,7 +1,15 @@
 <html>
-  <title>Project Delta E2E Dashboard</title>
+  <title>Delta E2E Dashboard</title>
   <head>
     <style>
+      .chart1 {
+        float: left;
+        width: '50%';
+      }
+      .chart2 {
+        float: right;
+        width: '50%';
+      }
       .button {
         background-color: #4CAF50;
         border: none;
@@ -75,7 +83,7 @@
         var data = new google.visualization.DataTable();
         data.addColumn('number', 'ID');
         data.addColumn('string', 'Name');
-        data.addColumn('number', 'Test Cases');
+        //data.addColumn('number', 'Test Cases');
         data.addRows(tempdata);
         var cssClassNames = {
           'headerRow': 'cssHeaderRow',
@@ -86,13 +94,36 @@
           'tableCell': 'cssTableCell'
         }
         var table = new google.visualization.Table(document.getElementById('Table_div'));
-        table.draw(data, {cssClassNames: cssClassNames, width: '50%', height: '70%'});
+        table.draw(data, {cssClassNames: cssClassNames});
       }
     </script>
+        <script>
+          tdata = JSON.parse({{tempdata1|tojson|safe}});
+          tempdata1 = tdata.data;
+          temptitle1 = tdata.title;
+          chartType = "PieChart"
+          containerID = "chart1"
+          options = {'title': temptitle1, is3D: true,};
+        </script>
+        <script type="text/javascript">
+          google.charts.load("current", {packages:["corechart"]});
+          google.charts.setOnLoadCallback(drawChart);
+          function drawChart() {
+            var data = google.visualization.arrayToDataTable(tempdata1);
+            var options = {
+              title: temptitle1,
+              is3D: true,
+            };
+    
+            var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
+            chart.draw(data, options);
+          }
+        </script>
   </head>
   <body>
     <marquee><h1>Project Delta E2E Dashboard</h1></marquee>
-    <h2>Test Suites</h2>
-    <div id="Table_div" style="width:700px; height: 400px; display: inline-block;"></div>    
+    <h2 style = "font-family: Lobster; color: #DA1F1F;">Test Suites</h2>
+    <div class = chart1 id="Table_div"	></div>
+    <div class = chart2 id="piechart_3d" style="width:400px; height: 500px; display: inline-block; padding-left: 100px;"></div>     
   </body>
 </html>
