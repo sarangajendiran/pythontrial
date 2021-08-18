@@ -2,13 +2,16 @@
   <title>Delta E2E Dashboard</title>
   <head>
     <style>
-      .chart1 {
-        float: left;
-        width: '50%';
+      .container {
+      display: flex;
+      width: 100%;
+      height: 250px;
       }
+      .chart1,
       .chart2 {
-        float: right;
-        width: '50%';
+        width: 50%;
+        /*background-color: lightblue;*/
+        /*border: thin solid darkgray;*/
       }
       .button {
         background-color: #4CAF50;
@@ -81,9 +84,9 @@
       google.charts.setOnLoadCallback(drawTable);
       function drawTable() {
         var data = new google.visualization.DataTable();
-        data.addColumn('number', 'ID');
-        data.addColumn('string', 'Name');
-        //data.addColumn('number', 'Test Cases');
+        data.addColumn('number', 'Suite ID');
+        data.addColumn('string', 'Suite Name');
+        data.addColumn('number', 'Suite Test Cases');
         data.addRows(tempdata);
         var cssClassNames = {
           'headerRow': 'cssHeaderRow',
@@ -94,7 +97,7 @@
           'tableCell': 'cssTableCell'
         }
         var table = new google.visualization.Table(document.getElementById('Table_div'));
-        table.draw(data, {cssClassNames: cssClassNames});
+        table.draw(data, {cssClassNames: cssClassNames,showRowNumber: true});
       }
     </script>
         <script>
@@ -106,24 +109,29 @@
           options = {'title': temptitle1, is3D: true,};
         </script>
         <script type="text/javascript">
-          google.charts.load("current", {packages:["corechart"]});
+          google.charts.load("current", {packages:["bar"]});
           google.charts.setOnLoadCallback(drawChart);
           function drawChart() {
             var data = google.visualization.arrayToDataTable(tempdata1);
             var options = {
-              title: temptitle1,
-              is3D: true,
+             /* chart: {
+                title: 'Overall Test Runs',
+              }, */             
+              bars: 'horizontal'
             };
-    
-            var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
-            chart.draw(data, options);
+
+            var chart = new google.charts.Bar(document.getElementById('barchart_material'));
+            chart.draw(data, google.charts.Bar.convertOptions(options));
           }
         </script>
   </head>
   <body>
     <marquee><h1>Project Delta E2E Dashboard</h1></marquee>
-    <h2 style = "font-family: Lobster; color: #DA1F1F;">Test Suites</h2>
-    <div class = chart1 id="Table_div"	></div>
-    <div class = chart2 id="piechart_3d" style="width:400px; height: 500px; display: inline-block; padding-left: 100px;"></div>     
+    <div style = "font-family: Lobster; color: #DA1F1F;float: left;"><h2>Overall Test Suites</h2></div>
+    <div style = "font-family: Lobster; color: #DA1F1F;float: right;"><h2>Overall Test Runs</h2></div>
+    <div class="container">
+      <div class = chart1 id="Table_div" style="width: 700px; height: 300px;" ></div>
+      <div class = chart2 id="barchart_material" style="width: 700px; height: 300px;" ></div>
+    </div>
   </body>
 </html>

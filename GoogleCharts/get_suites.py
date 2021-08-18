@@ -36,21 +36,16 @@ def get_suites(project_name):
     "Get the project ID using project name"
     client = get_testrail_client()
     project_id=get_project_id(project_name)
-    print("Project ID:", project_id)
+    # print("Project ID:", project_id)
     suite_id = None
     suites = client.send_get('get_suites/%s' %project_id)
     df1 = pd.DataFrame(suites, columns = ['id','name'])
-    # df1['total_cases'] = df1.apply(lambda x: get_cases(x['id']), axis=1)
+    df1['total_cases'] = df1.apply(lambda x: get_cases(x['id']), axis=1)
     a = df1.columns.values.tolist()
     b = df1.values.tolist()
     tempdata = json.dumps({'title': a, 'data':b})
     # print(b)
-    df2 = pd.DataFrame(suites, columns = ['name','id'])
-    c = df2.columns.values.tolist()
-    d = df2.values.tolist()
-    d.insert(0,a)
-    # print(d)
-    tempdata1 = json.dumps({'title': c, 'data':d})
+    tempdata1 = get_runs()
     return tempdata, tempdata1
     # df1.to_csv(r'C:\Users\4448\sample.csv', index= False)
 
@@ -58,11 +53,17 @@ def get_runs():
     "Get the project ID using project name"
     client = get_testrail_client()
     reports = client.send_get('get_runs/25')
-    df1 = pd.DataFrame(reports)
+    df1 = pd.DataFrame(reports, columns = ['name','passed_count', 'blocked_count', 'untested_count','retest_count','failed_count'])
+    df1.rename(columns = {'name' : 'Test Runs Name','passed_count' : 'Passed', 'blocked_count' : 'Blocked', 'untested_count' : 'UnTested','retest_count' : 'Retested','failed_count': 'Failed'}, inplace= True)
     # print(df1)
     file = df1.to_csv(r'C:\Users\4448\testruns.csv', index= False)
     print("File generated")
-    return df1
+    a = df1.columns.values.tolist()
+    b = df1.values.tolist()
+    b.insert(0,a)
+    print(b)
+    tempdata1 = json.dumps({'title': a, 'data':b})
+    return tempdata1
 
 # suite_data = get_suites('Project DELTA E2E')
 # print(suite_data)
