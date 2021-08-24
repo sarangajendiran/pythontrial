@@ -2,6 +2,9 @@
   <title>Delta E2E Dashboard</title>
   <head>
     <style>
+      /*body {
+        background-image: url("static/DHLlogo.png");
+      }*/
       .container {
       display: flex;
       width: 100%;
@@ -10,6 +13,11 @@
       .chart1,
       .chart2 {
         width: 50%;
+        /*background-color: lightblue;*/
+        /*border: thin solid darkgray;*/
+      }
+      .chart3 {
+        width: 100%;
         /*background-color: lightblue;*/
         /*border: thin solid darkgray;*/
       }
@@ -75,9 +83,9 @@
       tdata = JSON.parse({{tempdata|tojson|safe}});
       tempdata = tdata.data;
       temptitle = tdata.title;
-      chartType = "PieChart"
-      containerID = "chart1"
-      options = {'title': temptitle, is3D: true,};
+      //chartType = "PieChart"
+      //containerID = "chart1"
+      //options = {'title': temptitle, is3D: true,};
     </script>
     <script type="text/javascript">
       google.charts.load('current', {'packages':['table']});
@@ -104,9 +112,9 @@
           tdata = JSON.parse({{tempdata1|tojson|safe}});
           tempdata1 = tdata.data;
           temptitle1 = tdata.title;
-          chartType = "PieChart"
-          containerID = "chart1"
-          options = {'title': temptitle1, is3D: true,};
+          //chartType = "PieChart"
+          //containerID = "chart1"
+          //options = {'title': temptitle1, is3D: true,};
         </script>
         <script type="text/javascript">
           google.charts.load("current", {packages:["bar"]});
@@ -124,15 +132,44 @@
             chart.draw(data, google.charts.Bar.convertOptions(options));
           }
         </script>
+        <script>
+          tdata = JSON.parse({{tempdata2|tojson|safe}});
+          tempdata2 = tdata.data;
+          temptitle2 = tdata.title;
+          //chartType = "PieChart"
+          //options = {'title': temptitle, is3D: true,};
+        </script>
+        <script type="text/javascript">
+          google.charts.load("current", {packages:["corechart"]});
+          google.charts.setOnLoadCallback(drawChart);
+          function drawChart() {
+            var data = google.visualization.arrayToDataTable(tempdata2);
+            var options = {
+              title: 'Execution Status',
+              pieHole: 0.4,
+            };
+            var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+            chart.draw(data, options);
+            }
+        </script>
   </head>
   <body>
-    <marquee><h1>Project Delta E2E Dashboard</h1></marquee>
-    <div style = "font-family: Lobster; color: #DA1F1F;float: left;"><h2>Overall Test Suites</h2></div>
-    <div style = "font-family: Lobster; color: #DA1F1F;float: right;"><h2>Overall Test Runs</h2></div>
+    <!--<marquee style="color:#66CA61;"><h1>Project Delta E2E Dashboard</h1></marquee> !-->
+    <marquee behavior="slide" direction="left" style="color:#66CA61;">
+      <img src="static/DHLlogo.png" width="120" height="80" alt="Natural" />
+      <h1>Project Delta E2E Dashboard</h1>
+    </marquee>
+    <!--<div style = "font-family: Lobster; color: #DA1F1F;float: left;"><h2>Test Suites</h2></div>
+    <div style = "font-family: Lobster; color: #DA1F1F;float: right;"><h2>Test Execution</h2></div>!-->
     <div class="container">
       <div class = chart1 id="Table_div" style="width: 700px; height: 300px;" ></div>
-      <img src="static\gearimage.gif" alt="Execution" width="460" height="345">
-      <div class = chart2 id="barchart_material" style="width: 700px; height: 300px;" ></div>
+      <img src="static\gearimage.gif" alt="Execution" style="width: 700px; height: 300px;">
+      <div class = chart2 id="donutchart" style="width: 900px; height: 300px;" ></div>
     </div>
+    <br>
+    <br>
+    <marquee behavior="alternate" direction="left" style="color:#66CA61;"><h1>Overall Status of Test Execution</h1></marquee>
+    <!--<div class="container"> -->
+    <div  id="barchart_material" style="width: 100%; height: 400px;" ></div>
   </body>
 </html>

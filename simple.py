@@ -60,3 +60,15 @@ def get_cases(project_name, suite_name):
     return cases
 
 # cases = get_cases('Project DELTA E2E', '14.Security & Access Management')
+
+
+def merge_df():
+    df1 = pd.DataFrame([[1,2,3],[2,2,3],[3,1,2],[4,0,0]], columns=['id','no1','no2'])
+    df2 = pd.DataFrame([[1,22,333],[2,2222,31],[3,11,212],[4,1,21]], columns=['id','noA1','noA2'])
+    import numpy as np
+    df2 = pd.merge(df2, df1, on=['id'], how='right')
+    print(df2)
+    return df2
+
+merge_df()
+
