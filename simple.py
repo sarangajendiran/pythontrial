@@ -70,5 +70,23 @@ def merge_df():
     print(df2)
     return df2
 
-merge_df()
 
+def get_result_run_id():
+    "Get the project ID using project name"
+    client = get_testrail_client()
+    result = client.send_get('get_results_for_run/300')
+    df1 = pd.DataFrame(result, columns=['id','test_id','status_id','defects','version'])
+    # , columns=['id','test_id','status_id','defects','version','comment']
+    file1 = df1.to_csv(r'C:\Users\4448\testresult1.csv', index= False)
+    return df1
+
+# get_result_run_id()
+
+from atlassian import Jira
+jira_instance = Jira(
+    url = Conf_Reader.JIRA_URL,
+    username = Conf_Reader.TESTRAIL_USER,
+    password = Conf_Reader.TESTRAIL_PASSWORD,
+)
+results = jira_instance.jql("project = DE2E")
+print("JIRA connected", results)
